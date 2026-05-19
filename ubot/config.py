@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv(".env")
 
-DEVS = [1838348402, 6051457085, 6696975845]
+DEVS = [8948668149]
 
 
 
