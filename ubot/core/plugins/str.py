@@ -52,55 +52,74 @@ def ReplyCheck(message: Message):
 
     return reply_id
 
+async def load_ping_messages(user_id):
+    ping_message = {}
+
+    ping_message["pong"] = await get_ping_pong(user_id) or "ᴘᴏɴɢ:"
+    ping_message["uptime"] = await get_ping_uptime(user_id) or "ᴜᴘᴛɪᴍᴇ:"
+    ping_message["mention"] = await get_ping_mention(user_id) or "ᴍᴇɴᴛɪᴏɴ:"
+
+    return ping_message
+
 async def ping_cmd(client, message):
+    user_id = message.from_user.id
+    ub_uptime = await get_uptime(client.me.id)
+    uptime = await get_time((time() - ub_uptime))
     start = datetime.now()
-    try:
-        await client.invoke(Ping(ping_id=0))
-    except Exception as e:
-        print(f"Error during ping: {e}")
-        return await message.reply("❌ Ping failed.")
+    await client.invoke(Ping(ping_id=0))
     end = datetime.now()
-    
-    uptime = await get_time((time() - start_time))
-    delta_ping = round((end - start).microseconds / 1000, 2)  # Ping dalam milidetik
-
-    emot_pong = await get_var(client.me.id, "EMOJI_PING_PONG") or "🖕🏻"
-    emot_uptime = await get_var(client.me.id, "EMOJI_UPTIME") or "🖕🏻"
-    emot_anuan = await get_var(client.me.id, "EMOJI_ANUAN") or "😱"
-
-    # Mencetak ID emoji untuk debugging
-    print(f"Emoticons - Pong: {emot_pong}, Uptime: {emot_uptime}, Anuan: {emot_anuan}")
-
-    xx = await edit_or_reply(message, "🖕🏻")
-    await asyncio.sleep(2)
-    
+    ping_msg = await load_ping_messages(user_id)
+    delta_ping = (end - start).microseconds / 10000
+    emot_1 = await get_vars(client.me.id, "EMOJI_PING_PONG")
+    emot_2 = await get_vars(client.me.id, "EMOJI_UPTIME")
+    emot_3 = await get_vars(client.me.id, "EMOJI_MENTION")
+    emot_pong = emot_1 if emot_1 else "5269563867305879894"
+    emot_uptime = emot_2 if emot_2 else "5316615057939897832"
+    emot_mention = emot_3 if emot_3 else "6226371543065167427"
     if client.me.is_premium:
         _ping = f"""
-<b>{emot_pong} Pong !!</b> <code>{delta_ping} ms</code>
-<b>{emot_uptime} Uptime -</b> <code>{uptime}</code>
+<b><emoji id={emot_pong}>🏓</emoji> {ping_msg["pong"]}</b> <code>{str(delta_ping).replace('.', ',')} ms</code>
+<b><emoji id={emot_uptime}>⏰</emoji> {ping_msg["uptime"]}</b> <code>{uptime}</code>
+<b><emoji id={emot_mention}>👑</emoji> {ping_msg["mention"]}:</b> <a href=tg://user?id={client.me.id}>{client.me.first_name} {client.me.last_name or ''}</a>
 """
     else:
         _ping = f"""
-<b>{emot_pong} Pong !!</b> <code>{delta_ping} ms</code>
-<b>{emot_anuan} Uptime -</b> <code>{uptime}</code>
+<b>🏓 {ping_msg["pong"]}</b> <code>{str(delta_ping).replace('.', ',')} ms</code>
+<b>⏰{ping_msg["uptime"]}</b> <code>{uptime}</code>
+<b>👑{ping_msg["mention"]}:</b> <a href=tg://user?id={client.me.id}>{client.me.first_name} {client.me.last_name or ''}</a>
 """
-
-    try:
-        # Pastikan xx adalah objek Message yang valid
-        await asyncio.gather(
-            xx.delete(),  # Pastikan untuk menunggu penghapusan
-            client.send_message(
-                message.chat.id,
-                _ping,
-                reply_to_message_id=message.message_id if hasattr(message, 'message_id') else None  # Periksa atribut message_id
-            ),
-        )
-    except Exception as e:
-        print(f"Exception occurred: {e}")
-        if hasattr(xx, 'edit'):
-            await xx.edit(_ping, disable_web_page_preview=True)
+    await message.reply(_ping)
 
 
+async def set_pong_message(client: Client, message: Message):
+    user_id = message.from_user.id
+    args = message.text.split(maxsplit=1)
+    if len(args) >= 2:
+        new_message = args[1]
+        await set_ping_pong(user_id, new_message)
+        await message.reply_text("ʙᴇʀʜᴀsɪʟ ᴜᴘᴅᴀᴛᴇ ᴘᴇsᴀɴ ᴘᴏɴɢ..")
+    else:
+        await message.reply_text("ғᴏʀᴍᴀᴛ sᴀʟᴀʜ, ɢᴜɴᴀᴋᴀɴ '.setpong <kata kata>'.")
+
+async def set_uptime_message(client: Client, message: Message):
+    user_id = message.from_user.id
+    args = message.text.split(maxsplit=1)
+    if len(args) >= 2:
+        new_message = args[1]
+        await set_ping_uptime(user_id, new_message)
+        await message.reply_text("ʙᴇʀʜᴀsɪʟ ᴜᴘᴅᴀᴛᴇ ᴘᴇsᴀɴ ᴜᴘᴛɪᴍᴇ..")
+    else:
+        await message.reply_text("ғᴏʀᴍᴀᴛ sᴀʟᴀʜ, ɢᴜɴᴀᴋᴀɴ '.setupime <kata kata>'.")
+
+async def set_mention_message(client: Client, message: Message):
+    user_id = message.from_user.id
+    args = message.text.split(maxsplit=1)
+    if len(args) >= 2:
+        new_message = args[1]
+        await set_ping_mention(user_id, new_message)
+        await message.reply_text("ʙᴇʀʜᴀsɪʟ ᴜᴘᴅᴀᴛᴇ ᴘᴇsᴀɴ ᴍᴇɴᴛɪᴏɴ..")
+    else:
+        await message.reply_text("ғᴏʀᴍᴀᴛ sᴀʟᴀʜ, ɢᴜɴᴀᴋᴀɴ '.setmention <kata kata>'.")
 
 
 async def start_cmd(client, message):
