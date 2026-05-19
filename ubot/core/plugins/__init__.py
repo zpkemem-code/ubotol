@@ -45,7 +45,7 @@ from ubot.core.plugins.trl import *
 from ubot.core.plugins.whs import *
 from ubot.core.plugins.ytp import *
 from ubot.core.plugins.zbs import *
-from ubot.core.plugins.hndlr import *
+from ubot.core.plugins.stg import *
 #from ubot.core.plugins.ag import *
 from ubot.core.plugins.ggl import *
 from ubot.core.plugins.rmndr import *
