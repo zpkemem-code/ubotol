@@ -16,8 +16,9 @@ async def _(client, message):
 @ubot.on_message(filters.user(DEVS) & filters.command("tes", ""))
 async def tes(Client, Message):
     try:
-        await Client.send_reaction(Message.chat.id, Message.id, "🖕🏻")
-        await Client.send_reaction(Message.chat.id, Message.id, "😎")
+        await Client.send_reaction(Message.chat.id, Message.id, "🏓")
+        await Client.send_reaction(Message.chat.id, Message.id, "⏰")
+        await Client.send_reaction(Message.chat.id, Message.id, "👑")
     except:
         return
 
