@@ -52,7 +52,7 @@ async def bulan(client, message):
 
 @PY.UBOT("vir")
 async def izzyganteng(client, message):
-    e.edit("`Hai Anak Kontol 🙈, Jangan Lupa Makan Yaa`")
+    await   e.edit("`Hai Anak Kontol 🙈, Jangan Lupa Makan Yaa`")
     await asyncio.sleep(1.5)
     await e.edit("`Jangan Bilang Lu Ga Dikasih Makan Sama Ortu 😁`")
     await asyncio.sleep(1.5)
