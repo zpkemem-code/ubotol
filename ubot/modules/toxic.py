@@ -35,7 +35,7 @@ __HELP__ = """
 
 @PY.UBOT("kontol")
 async def bulan(client, message):
-    await e.edit("**KONTOLL**")
+    e = await message.edit("**KONTOLL**")
     await asyncio.sleep(1.5)
     await e.edit("**LU ANAK KONTOLL**")
     await asyncio.sleep(1.5)
@@ -52,7 +52,7 @@ async def bulan(client, message):
 
 @PY.UBOT("vir")
 async def izzyganteng(client, message):
-    await   e.edit("`Hai Anak Kontol 🙈, Jangan Lupa Makan Yaa`")
+    e = await message.edit("`Hai Anak Kontol 🙈, Jangan Lupa Makan Yaa`")
     await asyncio.sleep(1.5)
     await e.edit("`Jangan Bilang Lu Ga Dikasih Makan Sama Ortu 😁`")
     await asyncio.sleep(1.5)
