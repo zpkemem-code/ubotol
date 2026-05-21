@@ -82,8 +82,8 @@ async def ping_cmd(client, message):
     else:
         _ping = f"""
 <b>{emot_pong} Pong !!</b> <code>{delta_ping} ms</code>
-<b>{emot_uptime} Uptime -</b> <code>{emot_uptime}</code>
-<b>{emot_anuan} Anuan -</b> <code>{emot_anuan}</code>
+<b>{emot_uptime} Uptime -</b> <code>{uptime}</code>
+<b>{emot_anuan} Anuan -</b> <code>{anuan}</code>
 """
 
     try:
