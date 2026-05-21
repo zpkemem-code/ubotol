@@ -71,7 +71,7 @@ async def ping_cmd(client, message):
     # Mencetak ID emoji untuk debugging
     print(f"Emoticons - Pong: {emot_pong}, Uptime: {emot_uptime}, Anuan: {emot_anuan}")
 
-    xx = await edit_or_reply(message, "🏓")
+    xx = await edit_or_reply(message, "👑")
     await asyncio.sleep(2)
     
     if client.me.is_premium:
@@ -82,7 +82,8 @@ async def ping_cmd(client, message):
     else:
         _ping = f"""
 <b>{emot_pong} Pong !!</b> <code>{delta_ping} ms</code>
-<b>{emot_anuan} Uptime -</b> <code>{uptime}</code>
+<b>{emot_uptime} Uptime -</b> <code>{emot_uptime}</code>
+<b>{emot_anuan} Anuan -</b> <code>{emot_anuan}</code>
 """
 
     try:
